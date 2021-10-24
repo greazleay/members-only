@@ -1,30 +1,45 @@
-import axios from "axios";
+import axios from 'axios';
 
-const API_URL = "http://localhost:3000/api/user/";
+const API_URL = 'http://localhost:3000/api/';
 
 class AuthService {
-    login(username, password) {
-        return axios
-            .post(API_URL + "login", {
-                username,
-                password
-            })
-            .then(response => {
-                if (response.data.accessToken) {
-                    localStorage.setItem("user", JSON.stringify(response.data));
-                }
+    async login(credentials) {
+        // return axios
+        //     .post(API_URL + 'login', {
+        //         email,
+        //         password
+        //     })
+        //     .then(response => {
+        //         if (response.data.accessToken) {
+        //             localStorage.setItem('user', JSON.stringify(response.data));
+        //         }
 
-                return response.data;
-            });
+        //         return response.data;
+        //     });
+        try {
+            const res = await axios.post(API_URL + 'auth/login', credentials);
+            if (res.status !== 200) throw new Error('')
+            const user = await res.json();
+            return user;
+        } catch (err) {
+            console.error(err.message);
+            return false;
+        }
     }
 
-    logout() {
-        localStorage.removeItem("user");
+    async logout() {
+        // localStorage.removeItem('user');
+        try {
+            return await axios.get(API_URL + 'auth/logout');
+        } catch (err) {
+            console.error(err.message)
+            return false;
+        }
     }
 
-    register(username, email, password) {
-        return axios.post(API_URL + "register", {
-            username,
+    async signUp(name, email, password) {
+        return axios.post(API_URL + 'user/register', {
+            name,
             email,
             password
         });
