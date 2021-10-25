@@ -8,7 +8,7 @@ const PageTwo = () => {
         Page 2
       </p>
 
-      <Link to="/" className="App-link">
+      <Link to="/members-only" className="App-link">
         Previous Page
       </Link>
     </main>

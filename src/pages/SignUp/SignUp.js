@@ -1,9 +1,9 @@
 import './style.css';
 import React, { } from 'react';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router';
-import { Convert } from 'mongo-image-converter'
-import axios from 'axios';
+// import { useHistory } from 'react-router';
+// import { Convert } from 'mongo-image-converter'
+// import axios from 'axios';
 
 
 const SignUp = () => {

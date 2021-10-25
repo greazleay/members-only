@@ -1,8 +1,13 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useAuth } from '../../auth/authContext';
+import { useLocation, Redirect } from 'react-router-dom'
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const { isAuthenticated, setIsAuthenticated } = useAuth();
+    const location = useLocation();
+
     const onSubmit = async (data) => {
         // const imageString = await Convert(data.img[0]);
         // const parsedData = { ...data, img: imageString };
@@ -13,8 +18,12 @@ const Login = () => {
         // }
         // setSubmitted(true);
         // setTimeout(() => { history.replace('/products') }, 2000);
-        console.log(data, "Filled");
+        setIsAuthenticated(true)
     }
+
+    if (isAuthenticated) {
+        return <Redirect to={location.state.from.pathname} />;
+      }
 
     return (
         <main className="main">

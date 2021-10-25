@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { AuthContext } from './auth/authContext';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import NavBar from './components/NavBar';
+import { NavBar } from './components/NavBar';
 import Footer from './components/Footer';
 import HomePage from './pages/Home/Home';
-import PrivateRoute from './PrivateRoute';
+import { PrivateRoute } from './PrivateRoute';
 import PageTwo from './pages/Page2/Page2';
 import SignUp from './pages/SignUp/SignUp';
 import Login from './pages/Login/Login';
 
 const App = () => {
-  const [isAuth, setIsAuth] = useState();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
-    <AuthContext.Provider value={{ isAuth, setIsAuth }}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
       <BrowserRouter>
         <div className="container">
           <NavBar />
