@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api/';
+const API_URL = 'https://memb-only.herokuapp.com/api';
 
 class AuthService {
     async login(credentials) {
@@ -17,8 +17,8 @@ class AuthService {
         //         return response.data;
         //     });
         try {
-            const res = await axios.post(API_URL + 'auth/login', credentials);
-            if (res.status !== 200) throw new Error('')
+            const res = await axios.post(API_URL + '/auth/login', credentials);
+            if (res.status !== 200) throw new Error('An error has occured')
             const user = await res.json();
             return user;
         } catch (err) {
@@ -30,7 +30,7 @@ class AuthService {
     async logout() {
         // localStorage.removeItem('user');
         try {
-            return await axios.get(API_URL + 'auth/logout');
+            return await axios.get(API_URL + '/auth/logout');
         } catch (err) {
             console.error(err.message)
             return false;
@@ -38,15 +38,26 @@ class AuthService {
     }
 
     async signUp(name, email, password) {
-        return axios.post(API_URL + 'user/register', {
+        return axios.post(API_URL + '/user/register', {
             name,
             email,
             password
         });
     }
 
-    getCurrentUser() {
-        return JSON.parse(localStorage.getItem('user'));;
+    async getCurrentUser() {
+        // return JSON.parse(localStorage.getItem('user'));;
+        try {
+            const res = await axios.get(API_URL + '/user/userinfo', { headers: { authorization: 'Bearer ' } });
+            const data = await res.json();
+            return data
+        } catch (err) {
+            console.error(err.message)
+        }
+    }
+
+    async refreshToken() {
+        
     }
 }
 

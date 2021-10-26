@@ -1,12 +1,14 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../../auth/authContext';
-import { useLocation, Redirect } from 'react-router-dom'
+import { useLocation, Redirect } from 'react-router-dom';
+import authService from '../../auth/authService';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { isAuthenticated, setIsAuthenticated } = useAuth();
     const location = useLocation();
+    const referer = location.state?.from.pathname || 'members-only'
 
     const onSubmit = async (data) => {
         // const imageString = await Convert(data.img[0]);
@@ -19,10 +21,11 @@ const Login = () => {
         // setSubmitted(true);
         // setTimeout(() => { history.replace('/products') }, 2000);
         setIsAuthenticated(true)
+        authService.login(data)
     }
 
     if (isAuthenticated) {
-        return <Redirect to={location.state.from.pathname} />;
+        return <Redirect to={referer} />;
       }
 
     return (
