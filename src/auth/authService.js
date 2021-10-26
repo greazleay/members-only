@@ -1,6 +1,13 @@
 import axios from 'axios';
 
-const API_URL = 'https://memb-only.herokuapp.com/api';
+const API_URL = 'https://memb-only.herokuapp.com/api/';
+
+const instance = axios.create({
+    baseURL: API_URL,
+    withCredentials: true,
+    timeout: 2500,
+    // headers: {Authorization: `Bearer ${}`}
+})
 
 class AuthService {
     async login(credentials) {
@@ -17,7 +24,7 @@ class AuthService {
         //         return response.data;
         //     });
         try {
-            const res = await axios.post(API_URL + '/auth/login', credentials);
+            const res = await instance.post('auth/login', credentials, { withCredentials: true });
             if (res.status !== 200) throw new Error('An error has occured')
             const user = await res.json();
             return user;
@@ -30,7 +37,7 @@ class AuthService {
     async logout() {
         // localStorage.removeItem('user');
         try {
-            return await axios.get(API_URL + '/auth/logout');
+            return await instance.get('auth/logout');
         } catch (err) {
             console.error(err.message)
             return false;
@@ -38,7 +45,7 @@ class AuthService {
     }
 
     async signUp(name, email, password) {
-        return axios.post(API_URL + '/user/register', {
+        return instance.post('user/register', {
             name,
             email,
             password
@@ -48,7 +55,8 @@ class AuthService {
     async getCurrentUser() {
         // return JSON.parse(localStorage.getItem('user'));;
         try {
-            const res = await axios.get(API_URL + '/user/userinfo', { headers: { authorization: 'Bearer ' } });
+            // const res = await axios.get(API_URL + '/user/userinfo', { headers: { authorization: 'Bearer ' } });
+            const res = await instance.get('user/userinfo', { withCredentials: true });
             const data = await res.json();
             return data
         } catch (err) {
@@ -57,7 +65,7 @@ class AuthService {
     }
 
     async refreshToken() {
-        
+
     }
 }
 
