@@ -1,12 +1,14 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../../auth/authContext';
+// import { useAuth } from '../../auth/authContext';
+import { useAuth2Context } from '../../auth/auth2Contect';
 import { useLocation, Redirect } from 'react-router-dom';
 import authService from '../../auth/authService';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { isAuthenticated, setIsAuthenticated } = useAuth();
+    // const { isAuthenticated, setIsAuthenticated } = useAuth();
+    const { isAuthenticated, setIsAuthenticated } = useAuth2Context();
     const location = useLocation();
     const referer = location.state?.from.pathname || 'members-only'
 
@@ -26,7 +28,7 @@ const Login = () => {
 
     if (isAuthenticated) {
         return <Redirect to={referer} />;
-      }
+    }
 
     return (
         <main className="main">
