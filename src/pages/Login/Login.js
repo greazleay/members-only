@@ -8,7 +8,7 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { isAuthenticated, setIsAuthenticated } = useAuth();
     const location = useLocation();
-    const referer = location.state?.from.pathname || 'members-only'
+    const referer = location?.state.from.pathname || 'members-only'
 
     const onSubmit = async (data) => {
         // const imageString = await Convert(data.img[0]);
@@ -26,7 +26,7 @@ const Login = () => {
 
     if (isAuthenticated) {
         return <Redirect to={referer} />;
-      }
+    }
 
     return (
         <main className="main">

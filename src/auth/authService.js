@@ -1,11 +1,12 @@
 import axios from 'axios';
+import Buffer from 'buffer';
 
 const API_URL = 'https://memb-only.herokuapp.com/api/';
 
 const instance = axios.create({
     baseURL: API_URL,
     withCredentials: true,
-    timeout: 2500,
+    timeout: 5000,
     // headers: {Authorization: `Bearer ${}`}
 })
 
@@ -65,7 +66,21 @@ class AuthService {
     }
 
     async refreshToken() {
+        
+    }
 
+    async checkTokenValidity() {
+        instance.interceptors.request.use(async config => {
+            const currentDate = new Date();
+            const decodedToken = Buffer.from('base64')
+            if (decodedToken.exp * 1000 < currentDate.getTime()) {
+                const data = await this.refreshToken();
+                config.headers['authorization'] = "Bearer " + data.accessToken
+            }
+            return config
+        }, (error) => {
+            return Promise.reject(error)
+        })
     }
 }
 

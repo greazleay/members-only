@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 
-const PageTwo = () => {
+const PageTwo = ({ location }) => {
 
   useEffect(() => {
     authService.getCurrentUser()
@@ -22,6 +22,8 @@ const PageTwo = () => {
   // }, (error) => {
   //   return Promise.reject(error)
   // })
+
+  console.log(location)
 
   return (
     <main className="App-main">
