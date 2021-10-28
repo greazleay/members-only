@@ -1,14 +1,11 @@
-import './style.css';
 import { Link } from 'react-router-dom';
-import authService from '../../auth/authService';
+import auth from '../lib/auth';
 import { useEffect } from 'react';
-import axios from 'axios';
-import jwtDecode from 'jwt-decode';
 
 const PageTwo = ({ location }) => {
 
   useEffect(() => {
-    authService.getCurrentUser()
+    auth.getCurrentUser()
   }, [])
 
   // axios.interceptors.request.use(async config => {
@@ -26,13 +23,10 @@ const PageTwo = ({ location }) => {
   console.log(location)
 
   return (
-    <main className="App-main">
-      <p>
-        Page 2
-      </p>
-
-      <Link to="/members-only" className="App-link">
-        Previous Page
+    <main className="main">
+      <p>Page 2</p>
+      <Link to="/page-one">
+        <button>Previous Page</button>
       </Link>
     </main>
   );

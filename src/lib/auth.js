@@ -54,7 +54,6 @@ class AuthService {
     }
 
     async getCurrentUser() {
-        // return JSON.parse(localStorage.getItem('user'));;
         try {
             // const res = await axios.get(API_URL + '/user/userinfo', { headers: { authorization: 'Bearer ' } });
             const res = await instance.get('user/userinfo', { withCredentials: true });
