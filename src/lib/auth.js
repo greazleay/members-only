@@ -6,7 +6,7 @@ const API_URL = 'https://memb-only.herokuapp.com/api/';
 const instance = axios.create({
     baseURL: API_URL,
     withCredentials: true,
-    timeout: 5000,
+    timeout: 15000,
     // headers: {Authorization: `Bearer ${}`}
 })
 

@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuthContext } from '../context/auth';
+import SignOut from './SignOut';
 
 export const NavBar = () => {
+    const { isAuthenticated } = useAuthContext();
+
     return (
         <nav className="nav">
             <Link to="/members-only">
@@ -13,12 +17,8 @@ export const NavBar = () => {
             <Link to="/signup">
                 <button>Sign Up</button>
             </Link>
-            <Link to="/page-one">
-                <button>Page 1</button>
-            </Link>
-            <Link to="/page-two">
-                <button>Page 2</button>
-            </Link>
+            {isAuthenticated && <SignOut />}
+
         </nav>
     )
 }
