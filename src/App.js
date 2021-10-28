@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AuthContext } from './auth/authContext';
+// import { AuthContext } from './auth/authContext';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { NavBar } from './components/NavBar';
 import Footer from './components/Footer';
@@ -8,12 +8,14 @@ import { PrivateRoute } from './PrivateRoute';
 import PageTwo from './pages/Page2/Page2';
 import SignUp from './pages/SignUp/SignUp';
 import Login from './pages/Login/Login';
+import { Auth2ContextProvider } from './auth/auth2Contect';
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    // <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <Auth2ContextProvider>
       <BrowserRouter>
         <div className="container">
           <NavBar />
@@ -29,7 +31,9 @@ const App = () => {
           <Footer />
         </div>
       </BrowserRouter>
-    </AuthContext.Provider>
+      </Auth2ContextProvider>
+    // </AuthContext.Provider>
+    
   );
 }
 export default App;
