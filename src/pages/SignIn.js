@@ -1,13 +1,12 @@
 import '../assets/css/style.css';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useAuthContext } from '../context/auth';
+import { useAuth } from '../context/use-auth';
 import { useLocation, Redirect } from 'react-router-dom';
-import auth from '../lib/auth';
 
-const Login = () => {
+const SignIn = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { isAuthenticated, setIsAuthenticated } = useAuthContext();
+    const { auth, isAuthenticated, setIsAuthenticated } = useAuth();
     const location = useLocation();
     const referer = location.state?.from.pathname || 'members-only'
 
@@ -21,18 +20,18 @@ const Login = () => {
         // }
         // setSubmitted(true);
         // setTimeout(() => { history.replace('/products') }, 2000);
-        setIsAuthenticated(true)
+        // setIsAuthenticated(true)
         auth.login(data)
     }
 
-    if (isAuthenticated) {
+    if (auth.authToken) {
         return <Redirect to={referer} />;
     }
 
     return (
         <main className="main">
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
-                <h1 className="form-title">Login</h1>
+                <h1 className="form-title">Sign In</h1>
                 <fieldset className="fieldset">
                     <input type="email" className="input" placeholder="Emaiil Address" {...register("email", { required: "PLEASE ENTER A VALID EMAIL" })} />
                     <label className="label" htmlFor="email">Email</label>
@@ -43,10 +42,10 @@ const Login = () => {
                     <label className="label" htmlFor="password">Password</label>
                     {errors.password && <p>{errors.password.message}</p>}
                 </fieldset>
-                <button className="submitBtn" type="submit">Log In</button>
+                <button className="submitBtn" type="submit">{auth.isLoading ? 'Please wait..' : 'Sign In'}</button>
             </form>
         </main>
     )
 }
 
-export default Login
+export default SignIn;

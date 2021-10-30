@@ -1,15 +1,15 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { useAuthContext } from './context/auth';
+import { useAuth } from './context/use-auth';
 
 export const PrivateRoute = ({ children, ...rest }) => {
     // const { isAuthenticated } = useAuth();
-    const { isAuthenticated } = useAuthContext();
+    const { auth } = useAuth();
 
     return (
         <Route {...rest} render={({ location }) =>
-            isAuthenticated ? children : <Redirect to={{
-                pathname: 'login',
+            auth.authToken ? children : <Redirect to={{
+                pathname: 'signin',
                 state: { from: location }
             }} />
         } />

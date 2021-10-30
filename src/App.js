@@ -8,20 +8,18 @@ import { PrivateRoute } from './PrivateRoute';
 import PageOne from './pages/Page1';
 import PageTwo from './pages/Page2';
 import SignUp from './pages/SignUp';
-import Login from './pages/Login';
-import { AuthContext2Provider } from './context/auth';
+import SignIn from './pages/SignIn';
+import { ProvideAuth } from './context/use-auth';
 
 const App = () => {
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
-    // <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
-    <AuthContext2Provider>
+    <ProvideAuth>
       <BrowserRouter>
         <div className="container">
           <NavBar />
           <Switch>
-            <Route exact path="/login"><Login /></Route>
+            <Route exact path="/signin"><SignIn /></Route>
             <Route exact path="/signup"><SignUp /></Route>
             <Route exact path="/members-only"><HomePage /></Route>
             <PrivateRoute>
@@ -33,9 +31,7 @@ const App = () => {
           <Footer />
         </div>
       </BrowserRouter>
-    </AuthContext2Provider>
-    // </AuthContext.Provider>
-
+    </ProvideAuth>
   );
 }
 export default App;

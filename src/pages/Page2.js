@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom';
-import auth from '../lib/auth';
+// import auth from '../lib/auth';
+import { useAuth } from '../context/use-auth';
 import { useEffect } from 'react';
 
 const PageTwo = ({ location }) => {
 
+  const { auth } = useAuth()
+
   useEffect(() => {
-    auth.getCurrentUser()
-  }, [])
+    auth.getUser()
+  }, [auth])
 
   // axios.interceptors.request.use(async config => {
   //   const currentDate = new Date();

@@ -1,13 +1,11 @@
 import React from 'react';
-import { useAuthContext } from '../context/auth';
+import { useAuth } from '../context/use-auth';
 import { Link } from 'react-router-dom';
-import auth from '../lib/auth';
 
 const SignOut = () => {
-    const { setIsAuthenticated } = useAuthContext();
+    const { auth } = useAuth();
     const handleSignOut = () => {
         auth.logout();
-        setIsAuthenticated(false);
     }
     return (
         <>
