@@ -23,7 +23,7 @@ export const useProvideAuth = () => {
             if (res.status !== 200) throw new Error('An error has occured');
             setAuthToken(res.data.authToken);
             setIsLoading(false);
-            return authToken;
+            return true;
         } catch (err) {
             console.error(err.message);
             setIsError(err.message);
@@ -47,11 +47,11 @@ export const useProvideAuth = () => {
         try {
             setIsLoading(true);
             const res = await instance.post('auth/token_renewal');
-            console.log('++====++', 'I was called!!!');
-            if (res.status !== 200) throw new Error('An error has occured')
+            if (res.status !== 200) throw new Error('An error has occured');
+            // instance.options.headers.Authorization = `Bearer ${res.data.authToken}`;
             setAuthToken(res.data.authToken);
             setIsLoading(false);
-            return authToken;
+            return res.data.authToken;
         } catch (err) {
             console.error(err.message);
             setIsError(err.message);
@@ -62,9 +62,9 @@ export const useProvideAuth = () => {
     const register = async ({ email, password, name }) => {
         try {
             const res = await instance.post('auth/register', { email, password, name });
-            if (res.status !== 200) throw new Error('An error has occured')
+            if (res.status !== 200) throw new Error('An error has occured');
             setUser(res.data.user);
-            return user;
+            return true;
         } catch (err) {
             console.error(err.message);
             setIsError(err.message);
@@ -79,7 +79,7 @@ export const useProvideAuth = () => {
             if (res.status !== 200) throw new Error('An error has occured');
             setUser(res.data);
             setIsLoading(false);
-            return user;
+            return true;
         } catch (err) {
             console.error(err.message);
             setIsError(err.message);
@@ -100,8 +100,8 @@ export const useProvideAuth = () => {
                     originalConfig._retry = true;
 
                     try {
-                        const newToken = await refreshToken();
-                        instance.options.headers.Authorization = `Bearer ${newToken}`;
+                        const new_token = await refreshToken();
+                        instance.defaults.headers.common['Authorization'] = `Bearer ${new_token}`;
                         return instance(originalConfig);
                     } catch (_error) {
                         if (_error.response && _error.response.data) {
