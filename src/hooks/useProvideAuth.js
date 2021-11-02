@@ -22,7 +22,7 @@ export const useProvideAuth = () => {
     const login = async ({ email, password }) => {
         try {
             setIsLoading(true)
-            const res = await instance.post('auth/login', { email, password }, { withCredentials: true });
+            const res = await instance.post('auth/login', { email, password });
             if (res.status !== 200) throw new Error('An error has occured');
             setAuthToken(res.data.authToken);
             setIsLoading(false);
@@ -48,7 +48,7 @@ export const useProvideAuth = () => {
 
     const refreshToken = async () => {
         try {
-            const res = await instance.post('auth/token_renewal', { withCredentials: true });
+            const res = await instance.post('auth/token_renewal');
             if (res.status !== 200) throw new Error('An error has occured')
             setAuthToken(res.data.authToken);
             return authToken;
@@ -61,7 +61,7 @@ export const useProvideAuth = () => {
 
     const register = async ({ email, password, name }) => {
         try {
-            const res = await instance.post('auth/register', { email, password, name }, { withCredentials: true });
+            const res = await instance.post('auth/register', { email, password, name });
             if (res.status !== 200) throw new Error('An error has occured')
             setUser(res.data.user);
             return user;
