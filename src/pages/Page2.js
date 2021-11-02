@@ -17,7 +17,7 @@ const PageTwo = ({ location }) => {
         <button>Previous Page</button>
       </Link>
       <button onClick={refreshToken}>Get New Token</button>
-      {isLoading ? <p>Loading...</p> : <div>
+      {isLoading ? <h2>LOADING...</h2> : <div>
         <p>{user?.name}</p>
         <p>{user?.email}</p>
         <img src={user?.avatar} alt='' />

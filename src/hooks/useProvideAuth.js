@@ -47,7 +47,6 @@ export const useProvideAuth = () => {
         try {
             setIsLoading(true);
             const res = await instance.post('auth/token_renewal');
-            console.log('++====++', 'I was called!!!');
             if (res.status !== 200) throw new Error('An error has occured')
             setAuthToken(res.data.authToken);
             setIsLoading(false);
@@ -101,7 +100,7 @@ export const useProvideAuth = () => {
 
                     try {
                         const newToken = await refreshToken();
-                        instance.options.headers.Authorization = `Bearer ${newToken}`;
+                        instance.defaults.headers.Authorization = `Bearer ${newToken}`;
                         return instance(originalConfig);
                     } catch (_error) {
                         if (_error.response && _error.response.data) {
