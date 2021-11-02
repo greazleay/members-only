@@ -1,29 +1,14 @@
 import { Link } from 'react-router-dom';
-// import auth from '../lib/auth';
 import { useAuth } from '../context/use-auth';
 import { useEffect } from 'react';
 
 const PageTwo = ({ location }) => {
 
-  const { auth } = useAuth()
+  const { getUser, isLoading, refreshToken, user } = useAuth()
 
   useEffect(() => {
-    auth.getUser()
-  }, [auth])
-
-  // axios.interceptors.request.use(async config => {
-  //   const currentDate = new Date();
-  //   const decodedToken = jwtDecode()
-  //   if (decodedToken.exp * 1000 < currentDate.getTime()) {
-  //     const data = authService.refreshToken();
-  //     config.headers['authorization'] = "Bearer " + data.accessToken 
-  //   }
-  //   return config
-  // }, (error) => {
-  //   return Promise.reject(error)
-  // })
-
-  console.log(location)
+    (async () => await getUser())();
+  }, []);
 
   return (
     <main className="main">
@@ -31,6 +16,12 @@ const PageTwo = ({ location }) => {
       <Link to="/page-one">
         <button>Previous Page</button>
       </Link>
+      <button onClick={refreshToken}>Get New Token</button>
+      {isLoading ? <p>Loading...</p> : <div>
+        <p>{user?.name}</p>
+        <p>{user?.email}</p>
+        <img src={user?.avatar} alt='' />
+      </div>}
     </main>
   );
 }

@@ -3,9 +3,9 @@ import { useAuth } from '../context/use-auth';
 import { Link } from 'react-router-dom';
 
 const SignOut = () => {
-    const { auth } = useAuth();
-    const handleSignOut = () => {
-        auth.logout();
+    const { logout } = useAuth();
+    const handleSignOut = async () => {
+        await logout();
     }
     return (
         <>

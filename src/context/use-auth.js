@@ -1,13 +1,12 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext } from 'react';
 import { useProvideAuth } from '../hooks/useProvideAuth';
 
 const AuthContext = createContext();
 
 export const ProvideAuth = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const auth = useProvideAuth();
     return (
-        <AuthContext.Provider value={{ auth, isAuthenticated, setIsAuthenticated }}>
+        <AuthContext.Provider value={auth}>
             {children}
         </AuthContext.Provider>
     );

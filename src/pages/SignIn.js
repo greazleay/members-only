@@ -6,7 +6,7 @@ import { useLocation, Redirect } from 'react-router-dom';
 
 const SignIn = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { auth, isAuthenticated, setIsAuthenticated } = useAuth();
+    const { authToken, isLoading, login } = useAuth();
     const location = useLocation();
     const referer = location.state?.from.pathname || 'members-only'
 
@@ -21,10 +21,10 @@ const SignIn = () => {
         // setSubmitted(true);
         // setTimeout(() => { history.replace('/products') }, 2000);
         // setIsAuthenticated(true)
-        auth.login(data)
+        await login(data)
     }
 
-    if (auth.authToken) {
+    if (authToken) {
         return <Redirect to={referer} />;
     }
 
@@ -42,7 +42,7 @@ const SignIn = () => {
                     <label className="label" htmlFor="password">Password</label>
                     {errors.password && <p>{errors.password.message}</p>}
                 </fieldset>
-                <button className="submitBtn" type="submit">{auth.isLoading ? 'Please wait..' : 'Sign In'}</button>
+                <button className="submitBtn" type="submit">{isLoading ? 'Please wait..' : 'Sign In'}</button>
             </form>
         </main>
     )

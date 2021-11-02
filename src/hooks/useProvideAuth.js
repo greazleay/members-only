@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import Buffer from 'buffer';
-import { request } from 'http';
-
 
 export const useProvideAuth = () => {
     const [user, setUser] = useState(null);
@@ -22,7 +19,7 @@ export const useProvideAuth = () => {
     const login = async ({ email, password }) => {
         try {
             setIsLoading(true)
-            const res = await instance.post('auth/login', { email, password }, { withCredentials: true });
+            const res = await instance.post('auth/login', { email, password });
             if (res.status !== 200) throw new Error('An error has occured');
             setAuthToken(res.data.authToken);
             setIsLoading(false);
@@ -48,9 +45,12 @@ export const useProvideAuth = () => {
 
     const refreshToken = async () => {
         try {
-            const res = await instance.post('auth/token_renewal', { withCredentials: true });
+            setIsLoading(true);
+            const res = await instance.post('auth/token_renewal');
+            console.log('++====++', 'I was called!!!');
             if (res.status !== 200) throw new Error('An error has occured')
             setAuthToken(res.data.authToken);
+            setIsLoading(false);
             return authToken;
         } catch (err) {
             console.error(err.message);
@@ -61,7 +61,7 @@ export const useProvideAuth = () => {
 
     const register = async ({ email, password, name }) => {
         try {
-            const res = await instance.post('auth/register', { email, password, name }, { withCredentials: true });
+            const res = await instance.post('auth/register', { email, password, name });
             if (res.status !== 200) throw new Error('An error has occured')
             setUser(res.data.user);
             return user;
@@ -74,9 +74,11 @@ export const useProvideAuth = () => {
 
     const getUser = async () => {
         try {
+            setIsLoading(true)
             const res = await instance.get('user/userinfo');
             if (res.status !== 200) throw new Error('An error has occured');
-            setUser(res.data.user);
+            setUser(res.data);
+            setIsLoading(false);
             return user;
         } catch (err) {
             console.error(err.message);
@@ -85,35 +87,38 @@ export const useProvideAuth = () => {
         }
     };
 
-    const checkTokenValidity = async () => {
-        try {
-            const res = await instance.get('user/checktoken');
-            if (res.status !== 200) throw new Error('An error has occured')
-            setUser(res.data.user);
-            return user;
-        } catch (err) {
-            console.error(err.message);
-            setIsError(err.message);
-            return null;
+    instance.interceptors.response.use(
+        (res) => {
+            return res;
+        },
+        async (err) => {
+            const originalConfig = err.config;
+
+            if (err.response) {
+                // Access Token was expired
+                if (err.response.status === 401 && !originalConfig._retry) {
+                    originalConfig._retry = true;
+
+                    try {
+                        const newToken = await refreshToken();
+                        instance.options.headers.Authorization = `Bearer ${newToken}`;
+                        return instance(originalConfig);
+                    } catch (_error) {
+                        if (_error.response && _error.response.data) {
+                            return Promise.reject(_error.response.data);
+                        }
+                        return Promise.reject(_error);
+                    }
+                }
+
+                if (err.response.status === 403 && err.response.data) {
+                    return Promise.reject(err.response.data);
+                }
+            }
+
+            return Promise.reject(err);
         }
-    };
+    );
 
-    instance.interceptors.response.use(response => {
-        if (response.status === 401) refreshToken();
-        return response
-    }, error => {
-        return Promise.reject(error)
-    })
-
-    // useEffect(() => {
-    //     auth.onAuthStateChanged(user => {
-    //         if (user) {
-    //             setUser(user);
-    //         } else {
-    //             setUser(null);
-    //         }
-    //     });
-    // }, []);
-
-    return { authToken, user, isError, isLoading, login, logout, register, getUser, checkTokenValidity };
+    return { authToken, user, isError, isLoading, login, logout, register, getUser, refreshToken };
 }

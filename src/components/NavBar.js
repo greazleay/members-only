@@ -4,7 +4,7 @@ import { useAuth } from '../context/use-auth';
 import SignOut from './SignOut';
 
 export const NavBar = () => {
-    const { auth } = useAuth();
+    const { authToken } = useAuth();
 
     return (
         <nav className="nav">
@@ -17,7 +17,7 @@ export const NavBar = () => {
             <Link to="/signup">
                 <button>Sign Up</button>
             </Link>
-            {auth.authToken && <SignOut />}
+            {authToken && <SignOut />}
 
         </nav>
     )
