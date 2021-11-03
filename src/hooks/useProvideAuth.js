@@ -23,7 +23,7 @@ export const useProvideAuth = () => {
             if (res.status !== 200) throw new Error('An error has occured');
             setAuthToken(res.data.authToken);
             setIsLoading(false);
-            return authToken;
+            return true;
         } catch (err) {
             console.error(err.message);
             setIsError(err.message);
@@ -47,10 +47,15 @@ export const useProvideAuth = () => {
         try {
             setIsLoading(true);
             const res = await instance.post('auth/token_renewal');
+<<<<<<< HEAD
             if (res.status !== 200) throw new Error('An error has occured')
+=======
+            if (res.status !== 200) throw new Error('An error has occured');
+            // instance.options.headers.Authorization = `Bearer ${res.data.authToken}`;
+>>>>>>> 8209b1f79e9c29777943c2464bdd7ca59d537cb2
             setAuthToken(res.data.authToken);
             setIsLoading(false);
-            return authToken;
+            return res.data.authToken;
         } catch (err) {
             console.error(err.message);
             setIsError(err.message);
@@ -61,9 +66,9 @@ export const useProvideAuth = () => {
     const register = async ({ email, password, name }) => {
         try {
             const res = await instance.post('auth/register', { email, password, name });
-            if (res.status !== 200) throw new Error('An error has occured')
+            if (res.status !== 200) throw new Error('An error has occured');
             setUser(res.data.user);
-            return user;
+            return true;
         } catch (err) {
             console.error(err.message);
             setIsError(err.message);
@@ -78,7 +83,7 @@ export const useProvideAuth = () => {
             if (res.status !== 200) throw new Error('An error has occured');
             setUser(res.data);
             setIsLoading(false);
-            return user;
+            return true;
         } catch (err) {
             console.error(err.message);
             setIsError(err.message);
@@ -99,8 +104,13 @@ export const useProvideAuth = () => {
                     originalConfig._retry = true;
 
                     try {
+<<<<<<< HEAD
                         const newToken = await refreshToken();
                         instance.defaults.headers.Authorization = `Bearer ${newToken}`;
+=======
+                        const new_token = await refreshToken();
+                        instance.defaults.headers.common['Authorization'] = `Bearer ${new_token}`;
+>>>>>>> 8209b1f79e9c29777943c2464bdd7ca59d537cb2
                         return instance(originalConfig);
                     } catch (_error) {
                         if (_error.response && _error.response.data) {
