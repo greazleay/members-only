@@ -11,9 +11,9 @@ export const useProvideAuth = () => {
 
     const instance = axios.create({
         baseURL: API_URL,
-        withCredentials: true,
+        headers: { Authorization: `Bearer ${authToken}` },
         timeout: 15000,
-        headers: { Authorization: `Bearer ${authToken}` }
+        withCredentials: true,
     });
 
     const login = async ({ email, password }) => {
@@ -47,12 +47,7 @@ export const useProvideAuth = () => {
         try {
             setIsLoading(true);
             const res = await instance.post('auth/token_renewal');
-<<<<<<< HEAD
-            if (res.status !== 200) throw new Error('An error has occured')
-=======
             if (res.status !== 200) throw new Error('An error has occured');
-            // instance.options.headers.Authorization = `Bearer ${res.data.authToken}`;
->>>>>>> 8209b1f79e9c29777943c2464bdd7ca59d537cb2
             setAuthToken(res.data.authToken);
             setIsLoading(false);
             return res.data.authToken;
@@ -99,18 +94,14 @@ export const useProvideAuth = () => {
             const originalConfig = err.config;
 
             if (err.response) {
-                // Access Token was expired
+                // Access Token has expired
                 if (err.response.status === 401 && !originalConfig._retry) {
                     originalConfig._retry = true;
 
                     try {
-<<<<<<< HEAD
-                        const newToken = await refreshToken();
-                        instance.defaults.headers.Authorization = `Bearer ${newToken}`;
-=======
                         const new_token = await refreshToken();
-                        instance.defaults.headers.common['Authorization'] = `Bearer ${new_token}`;
->>>>>>> 8209b1f79e9c29777943c2464bdd7ca59d537cb2
+                        originalConfig.headers.Authorization = `Bearer ${new_token}`;
+                        instance.defaults.headers.common.Authorization = `Bearer ${new_token}`;
                         return instance(originalConfig);
                     } catch (_error) {
                         if (_error.response && _error.response.data) {
