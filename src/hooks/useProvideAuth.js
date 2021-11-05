@@ -2,10 +2,10 @@ import { useState } from 'react';
 import axios from 'axios';
 
 export const useProvideAuth = () => {
-    const [user, setUser] = useState(null);
-    const [authToken, setAuthToken] = useState(null);
-    const [isError, setIsError] = useState(null);
-    const [isLoading, setIsLoading] = useState(null)
+    const [user, setUser] = useState({});
+    const [authToken, setAuthToken] = useState('');
+    const [isError, setIsError] = useState('');
+    const [isLoading, setIsLoading] = useState(false)
 
     const API_URL = 'https://memb-only.herokuapp.com/api/';
 

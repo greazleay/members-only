@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/use-auth';
 import { useEffect } from 'react';
 
-const PageTwo = ({ location }) => {
+const PageTwo = () => {
 
   const { getUser, isLoading, refreshToken, user } = useAuth()
 

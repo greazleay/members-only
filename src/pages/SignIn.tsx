@@ -8,9 +8,9 @@ const SignIn = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { authToken, isLoading, login } = useAuth();
     const location = useLocation();
-    const referer = location.state?.from.pathname || 'members-only'
+    const referer: string = 'members-only'
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (data: any) => {
         // const imageString = await Convert(data.img[0]);
         // const parsedData = { ...data, img: imageString };
         // try {

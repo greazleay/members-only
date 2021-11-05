@@ -8,7 +8,7 @@ const SignUp = () => {
     // const [submitted, setSubmitted] = useState(false);
     // let history = useHistory();
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (data: any) => {
         // const imageString = await Convert(data.img[0]);
         // const parsedData = { ...data, img: imageString };
         // try {
