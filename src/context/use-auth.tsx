@@ -1,14 +1,11 @@
 import { createContext, useContext } from 'react';
 import { useProvideAuth } from '../hooks/useProvideAuth';
-import { RouterProps } from 'react-router';
+import { RouteProps } from 'react-router';
+import { AuthProviderInterface } from '../type';
 
-const defaultState = {
-    isLoading: false
-}
+const AuthContext = createContext<AuthProviderInterface>(undefined!);
 
-const AuthContext = createContext(defaultState);
-
-export const ProvideAuth = ({ children }: RouterProps) => {
+export const ProvideAuth = ({ children }: RouteProps) => {
     const auth = useProvideAuth();
     return (
         <AuthContext.Provider value={auth}>

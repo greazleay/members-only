@@ -13,8 +13,9 @@ import { ProvideAuth } from './context/use-auth';
 const App = () => {
 
   return (
-    <ProvideAuth>
+    
       <BrowserRouter>
+      <ProvideAuth>
         <div className="container">
           <NavBar />
           <Switch>
@@ -29,8 +30,8 @@ const App = () => {
           </Switch>
           <Footer />
         </div>
+        </ProvideAuth>
       </BrowserRouter>
-    </ProvideAuth>
   );
 }
 export default App;

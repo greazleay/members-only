@@ -1,11 +1,17 @@
 import { useState } from 'react';
 import axios from 'axios';
 
+interface User {
+    email: string,
+    password: string,
+    name: string
+}
+
 export const useProvideAuth = () => {
-    const [user, setUser] = useState({});
-    const [authToken, setAuthToken] = useState('');
+    const [authToken, setAuthToken] = useState<string>('');
     const [isError, setIsError] = useState('');
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
+    const [user, setUser] = useState({});
 
     const API_URL = 'https://memb-only.herokuapp.com/api/';
 
@@ -16,7 +22,7 @@ export const useProvideAuth = () => {
         withCredentials: true,
     });
 
-    const login = async ({ email, password }) => {
+    const login = async ({ email, password }: User): Promise<true | null> => {
         try {
             setIsLoading(true)
             const res = await instance.post('auth/login', { email, password });
@@ -24,26 +30,26 @@ export const useProvideAuth = () => {
             setAuthToken(res.data.authToken);
             setIsLoading(false);
             return true;
-        } catch (err) {
+        } catch (err: any) {
             console.error(err.message);
             setIsError(err.message);
             return null;
         }
     };
 
-    const logout = async () => {
+    const logout = async (): Promise<true | null> => {
         try {
             await instance.get('auth/logout');
-            setAuthToken(null);
+            setAuthToken('');
             return true;
-        } catch (err) {
+        } catch (err: any) {
             console.error(err.message)
             setIsError(err.message);
             return null;
         }
     };
 
-    const refreshToken = async () => {
+    const refreshToken = async () : Promise<string | null> => {
         try {
             setIsLoading(true);
             const res = await instance.post('auth/token_renewal');
@@ -51,27 +57,27 @@ export const useProvideAuth = () => {
             setAuthToken(res.data.authToken);
             setIsLoading(false);
             return res.data.authToken;
-        } catch (err) {
+        } catch (err: any) {
             console.error(err.message);
             setIsError(err.message);
             return null;
         }
     }
 
-    const register = async ({ email, password, name }) => {
+    const register = async ({ email, password, name }: User) : Promise<true | null> => {
         try {
             const res = await instance.post('auth/register', { email, password, name });
             if (res.status !== 200) throw new Error('An error has occured');
             setUser(res.data.user);
             return true;
-        } catch (err) {
+        } catch (err: any) {
             console.error(err.message);
             setIsError(err.message);
             return null;
         }
     };
 
-    const getUser = async () => {
+    const getUser = async () : Promise<true | null> => {
         try {
             setIsLoading(true)
             const res = await instance.get('user/userinfo');
@@ -79,7 +85,7 @@ export const useProvideAuth = () => {
             setUser(res.data);
             setIsLoading(false);
             return true;
-        } catch (err) {
+        } catch (err: any) {
             console.error(err.message);
             setIsError(err.message);
             return null;
@@ -103,7 +109,7 @@ export const useProvideAuth = () => {
                         originalConfig.headers.Authorization = `Bearer ${new_token}`;
                         instance.defaults.headers.common.Authorization = `Bearer ${new_token}`;
                         return instance(originalConfig);
-                    } catch (_error) {
+                    } catch (_error: any) {
                         if (_error.response && _error.response.data) {
                             return Promise.reject(_error.response.data);
                         }

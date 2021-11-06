@@ -1,8 +1,8 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, RouteProps } from 'react-router-dom';
 import { useAuth } from './context/use-auth';
 
-export const PrivateRoute = ({ children, ...rest }) => {
+export const PrivateRoute = ({ children, ...rest }: RouteProps) => {
     const { authToken } = useAuth();
 
     return (
