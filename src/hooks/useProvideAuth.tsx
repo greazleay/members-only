@@ -13,7 +13,7 @@ export const useProvideAuth = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [user, setUser] = useState({});
 
-    const API_URL = 'https://memb-only.herokuapp.com/api/';
+    const API_URL = 'https://auth-svr.herokuapp.com/api/';
 
     const instance = axios.create({
         baseURL: API_URL,
@@ -28,12 +28,13 @@ export const useProvideAuth = () => {
             const res = await instance.post('auth/login', { email, password });
             if (res.status !== 200) throw new Error('An error has occured');
             setAuthToken(res.data.authToken);
-            setIsLoading(false);
             return true;
         } catch (err: any) {
             console.error(err.message);
             setIsError(err.message);
             return null;
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -49,23 +50,29 @@ export const useProvideAuth = () => {
         }
     };
 
-    const refreshToken = async () : Promise<string | null> => {
+    const refreshToken = async (): Promise<string | null> => {
         try {
             setIsLoading(true);
             const res = await instance.post('auth/token_renewal');
+            if (res.status === 403) {
+                logout();
+                throw new Error('Refresh token has expired, please initiate a new signin request');
+            }
             if (res.status !== 200) throw new Error('An error has occured');
             setAuthToken(res.data.authToken);
-            setIsLoading(false);
             return res.data.authToken;
         } catch (err: any) {
             console.error(err.message);
             setIsError(err.message);
             return null;
+        } finally {
+            setIsLoading(false);
         }
     }
 
-    const register = async ({ email, password, name }: User) : Promise<true | null> => {
+    const register = async ({ email, password, name }: User): Promise<true | null> => {
         try {
+            setIsLoading(true);
             const res = await instance.post('auth/register', { email, password, name });
             if (res.status !== 200) throw new Error('An error has occured');
             setUser(res.data.user);
@@ -74,21 +81,24 @@ export const useProvideAuth = () => {
             console.error(err.message);
             setIsError(err.message);
             return null;
+        } finally { 
+            setIsLoading(false);
         }
     };
 
-    const getUser = async () : Promise<true | null> => {
+    const getUser = async (): Promise<true | null> => {
         try {
             setIsLoading(true)
             const res = await instance.get('user/userinfo');
             if (res.status !== 200) throw new Error('An error has occured');
             setUser(res.data);
-            setIsLoading(false);
             return true;
         } catch (err: any) {
             console.error(err.message);
             setIsError(err.message);
             return null;
+        } finally {
+            setIsLoading(false);
         }
     };
 
