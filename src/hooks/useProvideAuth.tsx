@@ -13,7 +13,7 @@ export const useProvideAuth = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [user, setUser] = useState({});
 
-    const API_URL = 'https://auth-svr.herokuapp.com/api/';
+    const API_URL = 'https://wauth-svr.azurewebsites.net/api/';
 
     const instance = axios.create({
         baseURL: API_URL,
