@@ -1,7 +1,6 @@
-import React from "react";
 import CSS from 'csstype';
 
-const Footer = () => {
+export const Footer = () => {
     const style: CSS.Properties = {
         width: '100%',
         height: '100%',
@@ -14,5 +13,3 @@ const Footer = () => {
         </footer>
     )
 }
-
-export default Footer

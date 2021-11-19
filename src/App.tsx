@@ -1,37 +1,42 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { NavBar } from './components/NavBar';
-import Footer from './components/Footer';
-import HomePage from './pages/Home';
-import { PrivateRoute } from './PrivateRoute';
-import PageOne from './pages/Page1';
-import PageTwo from './pages/Page2';
-import SignUp from './pages/SignUp';
-import SignIn from './pages/SignIn';
+import { Routes, Route } from 'react-router-dom';
+import { Home } from './pages/Home';
+import { RequireAuth } from './RequireAuth';
+import { PageOne } from './pages/Page1';
+import { PageTwo } from './pages/Page2';
+import { SignUp } from './pages/SignUp';
+import { SignIn } from './pages/SignIn';
 import { ProvideAuth } from './context/use-auth';
+import { Layout } from './components/Layout';
+import { NoMatch } from './pages/NoMatch';
 
 const App = () => {
 
   return (
-    
-      <BrowserRouter>
-      <ProvideAuth>
-        <div className="container">
-          <NavBar />
-          <Switch>
-            <Route exact path="/signin"><SignIn /></Route>
-            <Route exact path="/signup"><SignUp /></Route>
-            <Route exact path="/members-only"><HomePage /></Route>
-            <PrivateRoute>
-              <Route exact path="/page-one"><PageOne /></Route>
-              <Route exact path="/page-two"><PageTwo /></Route>
-            </PrivateRoute>
-            <Redirect to="/login" />
-          </Switch>
-          <Footer />
-        </div>
-        </ProvideAuth>
-      </BrowserRouter>
+    <ProvideAuth>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/page-one" element={
+            <RequireAuth>
+              <PageOne />
+            </RequireAuth>
+          }
+          />
+          <Route
+            path="/page-two"
+            element={
+              <RequireAuth>
+                <PageTwo />
+              </RequireAuth>
+            }
+          />
+          <Route path="*" element={<NoMatch />} />
+        </Route>
+      </Routes>
+    </ProvideAuth>
   );
 }
+
 export default App;

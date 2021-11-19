@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { User } from '../type'
 
-interface User {
-    email: string,
-    password: string,
-    name: string
+let defaultUser: User = {
+    email: '',
+    password: '',
+    name: '',
+    avatar: ''
 }
 
 export const useProvideAuth = () => {
     const [authToken, setAuthToken] = useState<string>('');
     const [isError, setIsError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState<User>(defaultUser);
 
     const API_URL = 'https://wauth-svr.azurewebsites.net/api/';
 
@@ -22,12 +24,13 @@ export const useProvideAuth = () => {
         withCredentials: true,
     });
 
-    const login = async ({ email, password }: User): Promise<true | null> => {
+    const login = async ({ email, password }: User, callback: VoidFunction): Promise<true | null> => {
         try {
             setIsLoading(true)
             const res = await instance.post('auth/login', { email, password });
             if (res.status !== 200) throw new Error('An error has occured');
             setAuthToken(res.data.authToken);
+            setTimeout(() => callback(), 100) 
             return true;
         } catch (err: any) {
             console.error(err.message);
@@ -50,26 +53,6 @@ export const useProvideAuth = () => {
         }
     };
 
-    const refreshToken = async (): Promise<string | null> => {
-        try {
-            setIsLoading(true);
-            const res = await instance.post('auth/token_renewal');
-            if (res.status === 403) {
-                logout();
-                throw new Error('Refresh token has expired, please initiate a new signin request');
-            }
-            if (res.status !== 200) throw new Error('An error has occured');
-            setAuthToken(res.data.authToken);
-            return res.data.authToken;
-        } catch (err: any) {
-            console.error(err.message);
-            setIsError(err.message);
-            return null;
-        } finally {
-            setIsLoading(false);
-        }
-    }
-
     const register = async ({ email, password, name }: User): Promise<true | null> => {
         try {
             setIsLoading(true);
@@ -81,7 +64,7 @@ export const useProvideAuth = () => {
             console.error(err.message);
             setIsError(err.message);
             return null;
-        } finally { 
+        } finally {
             setIsLoading(false);
         }
     };
@@ -101,6 +84,26 @@ export const useProvideAuth = () => {
             setIsLoading(false);
         }
     };
+
+    const refreshToken = async (): Promise<string | null> => {
+        try {
+            setIsLoading(true);
+            const res = await instance.post('auth/refresh_token');
+            if (res.status === 403) {
+                logout();
+                throw new Error('Refresh token has expired, please initiate a new signin request');
+            }
+            if (res.status !== 200) throw new Error('An error has occured');
+            setAuthToken(res.data.authToken);
+            return res.data.authToken;
+        } catch (err: any) {
+            console.error(err.message);
+            setIsError(err.message);
+            return null;
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
     instance.interceptors.response.use(
         (res) => {

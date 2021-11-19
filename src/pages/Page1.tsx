@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const PageOne = () => {
+export const PageOne = () => {
 
     return (
         <main className="main">
@@ -11,5 +11,3 @@ const PageOne = () => {
         </main>
     );
 };
-
-export default PageOne;

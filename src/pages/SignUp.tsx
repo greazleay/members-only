@@ -1,9 +1,7 @@
-import React, { } from 'react';
 import { useForm } from 'react-hook-form';
-// import { useHistory } from 'react-router';
 // import { Convert } from 'mongo-image-converter'
 
-const SignUp = () => {
+export const SignUp = () => {
     const { register, handleSubmit, formState: { errors }, getValues } = useForm();
     // const [submitted, setSubmitted] = useState(false);
     // let history = useHistory();
@@ -58,5 +56,3 @@ const SignUp = () => {
         </main>
     )
 }
-
-export default SignUp

@@ -2,13 +2,13 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/use-auth';
 import { useEffect } from 'react';
 
-const PageTwo = () => {
+export const PageTwo = () => {
 
   const { getUser, isLoading, refreshToken, user } = useAuth()
 
   useEffect(() => {
-    (async () => await getUser())();
-  }, []);
+    getUser()
+  }, [getUser]);
 
   return (
     <main className="main">
@@ -25,5 +25,3 @@ const PageTwo = () => {
     </main>
   );
 }
-
-export default PageTwo

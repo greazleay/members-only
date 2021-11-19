@@ -1,14 +1,13 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/use-auth';
-import SignOut from './SignOut';
+import { SignOut } from './SignOut';
 
 export const NavBar = () => {
     const { authToken } = useAuth();
 
     return (
         <nav className="nav">
-            <Link to="/members-only">
+            <Link to="/">
                 <button>Home</button>
             </Link>
             <Link to="/signin">
@@ -18,7 +17,6 @@ export const NavBar = () => {
                 <button>Sign Up</button>
             </Link>
             {authToken && <SignOut />}
-
         </nav>
     )
 }

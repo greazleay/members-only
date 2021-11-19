@@ -1,32 +1,21 @@
 import '../assets/css/style.css';
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../context/use-auth';
-import { useLocation, Redirect } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
-const SignIn = () => {
+export const SignIn = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { authToken, isLoading, login } = useAuth();
-    const location = useLocation();
-    const referer: string = 'members-only'
+    const { isLoading, login } = useAuth();
+    let location = useLocation();
+    let navigate = useNavigate()
+    let from = location.state?.from?.pathname || "/";
 
     const onSubmit = async (data: any) => {
-        // const imageString = await Convert(data.img[0]);
-        // const parsedData = { ...data, img: imageString };
-        // try {
-        //     axios.post('https://inv-hub.herokuapp.com/api/products/create', parsedData)
-        // } catch (err) {
-        //     if (err) return console.log(`${err.name}: ${err.message}`);
-        // }
-        // setSubmitted(true);
-        // setTimeout(() => { history.replace('/products') }, 2000);
-        // setIsAuthenticated(true)
-        await login(data)
+        await login(data, () => { navigate(from, { replace: true }) })
     }
 
-    if (authToken) {
-        return <Redirect to={referer} />;
-    }
+    // if (authToken) return navigate(from, { replace: true });
+    // if (authToken) return <Navigate to={referrer} replace={true} />
 
     return (
         <main className="main">
@@ -47,5 +36,3 @@ const SignIn = () => {
         </main>
     )
 }
-
-export default SignIn;

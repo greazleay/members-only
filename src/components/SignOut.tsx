@@ -1,8 +1,7 @@
-import React from 'react';
 import { useAuth } from '../context/use-auth';
 import { Link } from 'react-router-dom';
 
-const SignOut = () => {
+export const SignOut = () => {
     const { logout } = useAuth();
     const handleSignOut = () => {
         logout();
@@ -19,5 +18,3 @@ const SignOut = () => {
         </>
     );
 }
-
-export default SignOut;
