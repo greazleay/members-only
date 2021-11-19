@@ -4,11 +4,12 @@ import { useEffect } from 'react';
 
 export const PageTwo = () => {
 
-  const { getUser, isLoading, refreshToken, user } = useAuth()
+  const { getUser, isLoading, user } = useAuth()
 
   useEffect(() => {
-    getUser()
-  }, [getUser]);
+    getUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <main className="main">
@@ -16,7 +17,6 @@ export const PageTwo = () => {
       <Link to="/page-one">
         <button>Previous Page</button>
       </Link>
-      <button onClick={refreshToken}>Get New Token</button>
       {isLoading ? <h2>LOADING...</h2> : <div>
         <p>{user?.name}</p>
         <p>{user?.email}</p>

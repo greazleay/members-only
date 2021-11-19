@@ -6,13 +6,13 @@ export interface User {
 }
 
 export interface AuthProviderInterface {
-    authToken: string, 
-    user: User, 
-    isError: string, 
-    isLoading: boolean, 
-    login: ({email, password} : User, callback: VoidFunction) => Promise<true | null>, 
-    logout: () => Promise<true | null>, 
-    register: ({email, password, name} : User) => Promise<true | null>, 
-    getUser: () => Promise<true | null>, 
+    authToken: string,
+    user: User,
+    isError: string,
+    isLoading: boolean,
+    login: ({ email, password }: User, callback: VoidFunction) => Promise<true | null>,
+    logout: () => Promise<true | null>,
+    register: ({ email, password, name }: User) => Promise<true | null>,
+    getUser: () => Promise<true | null>,
     refreshToken: () => Promise<string | null>
 }

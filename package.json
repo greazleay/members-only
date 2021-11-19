@@ -2,7 +2,7 @@
   "name": "members-only",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://pollaroid.net/members-only",
+  "homepage": "https://mema.azurewebsites.net/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",

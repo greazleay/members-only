@@ -15,7 +15,7 @@ export const useProvideAuth = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [user, setUser] = useState<User>(defaultUser);
 
-    const API_URL = 'https://wauth-svr.azurewebsites.net/api/';
+    const API_URL = 'https://api.polldevs.com/api/';
 
     const instance = axios.create({
         baseURL: API_URL,
@@ -30,7 +30,7 @@ export const useProvideAuth = () => {
             const res = await instance.post('auth/login', { email, password });
             if (res.status !== 200) throw new Error('An error has occured');
             setAuthToken(res.data.authToken);
-            setTimeout(() => callback(), 100) 
+            setTimeout(() => callback(), 100);
             return true;
         } catch (err: any) {
             console.error(err.message);
