@@ -10,6 +10,7 @@ declare module '@mui/material/styles' {
     interface Palette {
         neutral: Palette['primary'];
     }
+
     interface PaletteOptions {
         neutral: PaletteOptions['primary'];
     }
@@ -17,21 +18,32 @@ declare module '@mui/material/styles' {
     interface PaletteColor {
         darker?: string;
     }
+
     interface SimplePaletteColorOptions {
         darker?: string;
     }
+
     interface ThemeOptions {
         status: {
             danger: React.CSSProperties['color'];
         };
     }
+
+    interface BreakpointOverrides {
+        xs: true;
+        sm: true;
+        md: true;
+        lg: true;
+        xl: true;
+        xxl: true;
+    }
 }
 
 declare module '@mui/material/Pagination' {
     interface PaginationPropsColorOverrides {
-      neutral: true;
+        neutral: true;
     }
-  }
+}
 
 
 export const theme = createTheme({
@@ -70,7 +82,7 @@ export const theme = createTheme({
             ],
             styleOverrides: {
                 root: {
-                    fontFamily: 'Quicksand'
+                    fontFamily: 'Oxygen'
                 }
             }
         },
@@ -98,7 +110,7 @@ export const theme = createTheme({
         MuiSnackbarContent: {
             styleOverrides: {
                 root: {
-                    fontFamily: 'Quicksand',
+                    fontFamily: 'Oxygen',
                     fontWeight: 'bold'
                 }
             }
@@ -107,7 +119,7 @@ export const theme = createTheme({
             styleOverrides: {
                 root: {
                     color: 'white',
-                    fontFamily: 'Quicksand',
+                    fontFamily: 'Oxygen',
                     fontWeight: 'bold',
                     fontSize: '1rem'
                 }
@@ -121,6 +133,7 @@ export const theme = createTheme({
             md: 900,
             lg: 1200,
             xl: 1900,
+            xxl: 2500
         },
     },
 })
