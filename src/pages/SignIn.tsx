@@ -2,13 +2,14 @@ import '../assets/css/style.css';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../context/use-auth';
 import { useLocation, useNavigate } from 'react-router';
+import { LocationState } from '../type';
 
 export const SignIn = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { isLoading, login } = useAuth();
     let location = useLocation();
     let navigate = useNavigate()
-    let from = location.state?.from?.pathname || "/";
+    let from = (location.state as LocationState)?.from?.pathname || "/";
 
     const onSubmit = async (data: any) => {
         await login(data, () => { navigate(from, { replace: true }) })

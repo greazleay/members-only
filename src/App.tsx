@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { RequireAuth } from './RequireAuth';
 import { PageOne } from './pages/Page1';
@@ -9,14 +9,15 @@ import { useAuth } from './context/use-auth';
 import { Layout } from './components/Layout';
 import { NoMatch } from './pages/NoMatch';
 import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
+import { LocationState } from './type';
 
 const App = () => {
 
   const { isError, isLoading, refreshToken } = useAuth();
   let location = useLocation();
   let navigate = useNavigate()
-  let from = location.state?.from?.pathname || "/";
+  let from = (location.state as LocationState)?.from?.pathname || '/';
 
   const attemptTokenRefresh = async () => {
     await refreshToken();

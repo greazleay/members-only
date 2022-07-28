@@ -16,3 +16,9 @@ export interface AuthProviderInterface {
     getUser: () => Promise<true | null>,
     refreshToken: () => Promise<string | null>
 }
+
+export type LocationState = {
+    from: {
+        pathname: string;
+    };
+};
