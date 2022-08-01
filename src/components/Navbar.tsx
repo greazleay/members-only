@@ -27,9 +27,9 @@ export const Navbar = () => {
     };
 
     const pages = [
-        { title: 'Home', path: '/' },
-        { title: 'About', path: '/about' },
-        { title: 'Contact', path: '/contact' }
+        { title: 'HOME', path: '/' },
+        { title: 'ABOUT', path: '/about' },
+        { title: 'CONTACT', path: '/contact' }
     ];
 
     const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];

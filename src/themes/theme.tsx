@@ -1,51 +1,5 @@
 import { createTheme } from '@mui/material'
 
-declare module '@mui/material/styles' {
-    interface Theme {
-        status: {
-            danger: React.CSSProperties['color'];
-        };
-    }
-
-    interface Palette {
-        neutral: Palette['primary'];
-    }
-
-    interface PaletteOptions {
-        neutral: PaletteOptions['primary'];
-    }
-
-    interface PaletteColor {
-        darker?: string;
-    }
-
-    interface SimplePaletteColorOptions {
-        darker?: string;
-    }
-
-    interface ThemeOptions {
-        status: {
-            danger: React.CSSProperties['color'];
-        };
-    }
-
-    interface BreakpointOverrides {
-        xs: true;
-        sm: true;
-        md: true;
-        lg: true;
-        xl: true;
-        xxl: true;
-    }
-}
-
-declare module '@mui/material/Pagination' {
-    interface PaginationPropsColorOverrides {
-        neutral: true;
-    }
-}
-
-
 export const theme = createTheme({
     status: {
         danger: '#e53e3e',
@@ -122,6 +76,14 @@ export const theme = createTheme({
                     fontFamily: 'Oxygen',
                     fontWeight: 'bold',
                     fontSize: '1rem'
+                }
+            }
+        },
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    fontFamily: 'Oxygen',
+                    fontWeight: 'bold',
                 }
             }
         }
