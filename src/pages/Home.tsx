@@ -63,14 +63,18 @@ export const Home = () => {
                 <Stack spacing={2} width='100%' alignItems={'center'}>
 
                     <Stack spacing={1} width='60%'>
-                        <Typography variant='caption' component={'span'}>Don't have an account?</Typography>
-                        <Button variant='contained' endIcon={<PersonAddOutlinedIcon />}>
+                        <Typography variant='caption' component={'span'}>
+                            Don't have an account?
+                        </Typography>
+                        <Button href='/signup' variant='contained' endIcon={<PersonAddOutlinedIcon />}>
                             Sign Up
                         </Button>
                     </Stack>
 
                     <Stack spacing={1} width='60%'>
-                        <Typography variant='caption' component={'span'}>Already have an account?</Typography>
+                        <Typography variant='caption' component={'span'}>
+                            Already have an account?
+                        </Typography>
                         <Button variant='contained' color='secondary' endIcon={<LoginOutlinedIcon />}>
                             Sign In
                         </Button>

@@ -86,6 +86,36 @@ export const theme = createTheme({
                     fontWeight: 'bold',
                 }
             }
+        },
+        MuiInputLabel: {
+            styleOverrides: {
+                root: {
+                    fontFamily: 'Oxygen',
+                    color: 'white',
+                    '&.Mui-focused': {
+                        'fontFamily': 'Oxygen',
+                        'color': '#D8F58C'
+                    }
+                }
+            }
+        },
+        MuiOutlinedInput: {
+            styleOverrides: {
+                root: {
+                    fontFamily: 'Oxygen',
+                    color: 'white',
+                }
+            }
+        },
+        MuiFormHelperText: {
+            styleOverrides: {
+                root: {
+                    '&.Mui-error': {
+                        'fontFamily': 'Oxygen',
+                        'color': 'white'
+                    }
+                }
+            }
         }
     },
     breakpoints: {
