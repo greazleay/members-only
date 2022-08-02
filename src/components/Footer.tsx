@@ -14,7 +14,7 @@ export const Footer = () => {
 
             <Box sx={{ py: 2 }}>
                 <Typography variant='subtitle2' component={'span'} sx={{ fontFamily: 'inherit' }}>
-                    © {new Date().getFullYear()} Pollaroid | Shopping Cart
+                    © {new Date().getFullYear()} Pollaroid | Members Only
                 </Typography>
             </Box>
 

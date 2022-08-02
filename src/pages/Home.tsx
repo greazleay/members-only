@@ -75,7 +75,7 @@ export const Home = () => {
                         <Typography variant='caption' component={'span'}>
                             Already have an account?
                         </Typography>
-                        <Button variant='contained' color='secondary' endIcon={<LoginOutlinedIcon />}>
+                        <Button href='/signin' variant='contained' color='secondary' endIcon={<LoginOutlinedIcon />}>
                             Sign In
                         </Button>
                     </Stack>
