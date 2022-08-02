@@ -1,8 +1,11 @@
 import { useForm, Controller } from 'react-hook-form';
+import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
+import Link from '@mui/material/Link';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -21,7 +24,6 @@ export const SignUp = () => {
                 alignItems: 'center',
                 minHeight: '100vh',
                 flexWrap: 'wrap',
-                width: '100%'
             }}
         >
 
@@ -32,22 +34,25 @@ export const SignUp = () => {
                 sx={{
                     background: 'inherit',
                     color: 'inherit',
-                    width: { xs: '70%', sm: '50%' },
+                    width: { xs: '90%', sm: '50%' },
+                    height: 700,
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
-                    justifyContent: 'center',
-                    py: { xs: 5, md: 10 },
-                    px: 3
+                    justifyContent: 'space-around',
+                    py: { xs: 2, md: 3 },
+                    px: { xs: 2, md: 3 }
                 }}
             >
 
-                <Grid container spacing={2} direction='column'>
+                <Avatar sx={{ bgcolor: 'secondary.main' }}>
+                    <LockOutlinedIcon />
+                </Avatar>
+                <Typography variant='h4' component={'h1'}>
+                    Sign Up
+                </Typography>
 
-                    <Grid item>
-                        <Typography variant='h4' component={'h1'}>
-                            Sign Up
-                        </Typography>
-                    </Grid>
+                <Grid container spacing={3} direction='column'>
 
                     <Grid item>
                         <Controller
@@ -174,16 +179,23 @@ export const SignUp = () => {
                         />
                     </Grid>
 
-                    <Grid item alignSelf={'end'}>
-                        <Button
-                            variant='contained'
-                            type='submit'
-                            endIcon={<HowToRegOutlinedIcon />}
-                        >
-                            Register
-                        </Button>
-                    </Grid>
+                </Grid>
 
+                <Button
+                    fullWidth
+                    variant='contained'
+                    type='submit'
+                    endIcon={<HowToRegOutlinedIcon />}
+                >
+                    Register
+                </Button>
+
+                <Grid container justifyContent='flex-end'>
+                    <Grid item>
+                        <Link href='/signin' variant='body2' color={'inherit'}>
+                            Already have an account? Sign in
+                        </Link>
+                    </Grid>
                 </Grid>
 
             </Paper>
